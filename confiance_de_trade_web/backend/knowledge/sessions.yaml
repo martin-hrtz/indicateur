@@ -1,0 +1,56 @@
+timezone: Europe/Paris
+sessions:
+  - name: "EU Cash Open"
+    category: SESSION_EVENT
+    title: "Ouverture cash Europe"
+    weekdays: [1, 2, 3, 4, 5]
+    time: "08:00"
+    severity: 25
+    scenario: EU_OPEN
+    pre_window_minutes: 20
+    post_window_minutes: 15
+  - name: "EU Cash Close"
+    category: SESSION_EVENT
+    title: "Clôture cash Europe"
+    weekdays: [1, 2, 3, 4, 5]
+    time: "16:30"
+    severity: 20
+    scenario: EU_CLOSE
+    pre_window_minutes: 15
+    post_window_minutes: 20
+  - name: "US Cash Open"
+    category: SESSION_EVENT
+    title: "Ouverture cash US"
+    weekdays: [1, 2, 3, 4, 5]
+    time: "15:30"
+    severity: 30
+    scenario: US_OPEN
+    pre_window_minutes: 25
+    post_window_minutes: 15
+  - name: "US Cash Close"
+    category: SESSION_EVENT
+    title: "Clôture cash US"
+    weekdays: [1, 2, 3, 4, 5]
+    time: "22:00"
+    severity: 22
+    scenario: US_CLOSE
+    pre_window_minutes: 15
+    post_window_minutes: 20
+  - name: "CME Futures Reopen"
+    category: SESSION_EVENT
+    title: "Réouverture CME (dimanche)"
+    weekdays: [7]
+    time: "23:00"
+    severity: 35
+    scenario: CME_REOPEN
+    pre_window_minutes: 45
+    post_window_minutes: 20
+  - name: "FX London Fix"
+    category: SESSION_EVENT
+    title: "Fixing FX Londres"
+    weekdays: [1, 2, 3, 4, 5]
+    time: "17:00"
+    severity: 18
+    scenario: LONDON_FIX
+    pre_window_minutes: 15
+    post_window_minutes: 10

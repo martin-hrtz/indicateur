@@ -1,0 +1,125 @@
+baseline: 95
+logistic:
+  mid: 50
+  steepness: 0.12
+  scale: 100
+ema:
+  half_life_seconds: 30
+clamp:
+  min_per_second: -5
+  max_per_second: 3
+deduplication:
+  window_seconds: 300
+category_defaults:
+  MACRO:
+    weight: 1.4
+    half_life_seconds: 900
+    max_age_seconds: 7200
+    timing: planned
+  REGULATORY:
+    weight: 1.3
+    half_life_seconds: 1200
+    max_age_seconds: 7200
+    timing: planned
+  ETF_SEC:
+    weight: 1.45
+    half_life_seconds: 1500
+    max_age_seconds: 7200
+    timing: planned
+  EXCHANGE_STATUS:
+    weight: 1.5
+    half_life_seconds: 1200
+    max_age_seconds: 5400
+    timing: breaking
+  EXCHANGE_ANNOUNCEMENT:
+    weight: 1.2
+    half_life_seconds: 1800
+    max_age_seconds: 7200
+    timing: planned
+  HACK:
+    weight: 1.7
+    half_life_seconds: 900
+    max_age_seconds: 5400
+    timing: breaking
+  ONCHAIN:
+    weight: 1.5
+    half_life_seconds: 900
+    max_age_seconds: 5400
+    timing: breaking
+  MICROSTRUCTURE:
+    weight: 1.2
+    half_life_seconds: 600
+    max_age_seconds: 3600
+    timing: breaking
+  SESSION_EVENT:
+    weight: 0.9
+    half_life_seconds: 600
+    max_age_seconds: 2700
+    timing: planned
+  NEWS:
+    weight: 1.0
+    half_life_seconds: 900
+    max_age_seconds: 5400
+    timing: breaking
+  RUMOR:
+    weight: 0.6
+    half_life_seconds: 600
+    max_age_seconds: 1800
+    timing: breaking
+asset_multipliers:
+  default: 1.0
+  BTC: 1.1
+  ETH: 1.05
+  SOL: 1.08
+  ASTER: 1.15
+timing_rules:
+  planned:
+    default:
+      pre_seconds: 1800
+      post_seconds: 900
+      tau_seconds: 1800
+      boost: 1.2
+    categories:
+      MACRO:
+        pre_seconds: 3600
+        post_seconds: 1800
+        tau_seconds: 2000
+        boost: 1.6
+        scenarios:
+          CPI:
+            pre_seconds: 1800
+            post_seconds: 600
+            tau_seconds: 900
+            boost: 1.8
+          CORE_CPI:
+            pre_seconds: 1800
+            post_seconds: 600
+            tau_seconds: 900
+            boost: 1.7
+          NFP:
+            pre_seconds: 2400
+            post_seconds: 900
+            tau_seconds: 1200
+            boost: 1.7
+          FOMC:
+            pre_seconds: 3600
+            post_seconds: 1800
+            tau_seconds: 1800
+            boost: 1.9
+          ECB:
+            pre_seconds: 3600
+            post_seconds: 1800
+            tau_seconds: 1800
+            boost: 1.6
+      SESSION_EVENT:
+        pre_seconds: 900
+        post_seconds: 900
+        tau_seconds: 600
+        boost: 1.3
+      ETF_SEC:
+        pre_seconds: 5400
+        post_seconds: 1800
+        tau_seconds: 2400
+        boost: 1.8
+  breaking:
+    default_half_life_seconds: 900

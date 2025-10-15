@@ -1,0 +1,72 @@
+scenarios:
+  CPI:
+    category: MACRO
+    title: "Publication CPI US"
+    severity: 70
+    description: "Indice des prix à la consommation US"
+    default_meta:
+      scenario: CPI
+      timing: planned
+      currencies: ["BTC", "ETH"]
+  CORE_CPI:
+    category: MACRO
+    title: "Publication Core CPI US"
+    severity: 65
+    description: "Inflation sous-jacente US"
+    default_meta:
+      scenario: CORE_CPI
+      timing: planned
+      currencies: ["BTC", "ETH"]
+  NFP:
+    category: MACRO
+    title: "Rapport NFP"
+    severity: 68
+    description: "Emploi non agricole US"
+    default_meta:
+      scenario: NFP
+      timing: planned
+      currencies: ["BTC", "ETH"]
+  FOMC:
+    category: MACRO
+    title: "Décision FOMC"
+    severity: 80
+    description: "Décision Fed + conférence"
+    default_meta:
+      scenario: FOMC
+      timing: planned
+      currencies: ["BTC", "ETH"]
+  ECB:
+    category: MACRO
+    title: "Décision BCE"
+    severity: 60
+    description: "Conférence BCE"
+    default_meta:
+      scenario: ECB
+      timing: planned
+      currencies: ["BTC", "ETH"]
+  ETF_BTC_APPROVAL:
+    category: ETF_SEC
+    title: "Décision ETF BTC"
+    severity: 85
+    description: "Décision d'approbation ETF BTC"
+    default_meta:
+      scenario: ETF_BTC_APPROVAL
+      timing: planned
+      currencies: ["BTC"]
+  EXCHANGE_OUTAGE:
+    category: EXCHANGE_STATUS
+    title: "Incident exchange majeur"
+    severity: 85
+    description: "Outage ou freeze sur un exchange central"
+    default_meta:
+      scenario: EXCHANGE_OUTAGE
+      timing: breaking
+  HACK_MAJOR:
+    category: HACK
+    title: "Hack majeur"
+    severity: 90
+    description: "Hack confirmé >10M"
+    default_meta:
+      scenario: HACK_MAJOR
+      timing: breaking
+      currencies: ["BTC", "ETH", "SOL", "ASTER"]
