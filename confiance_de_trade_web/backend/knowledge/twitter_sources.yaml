@@ -1,0 +1,33 @@
+credibility_weights:
+  official: 90
+  media: 75
+  community: 55
+  low_signal: 35
+suggested_accounts:
+  project_protocols:
+    - handle: "@Aster_DEX"
+      name: "AsterDEX"
+      category: project_protocols
+      credibility: 70
+    - handle: "@ProjectPlaceholder"
+      name: "Votre liste projet"
+      category: project_protocols
+      credibility: 50
+  media_news:
+    - handle: "@WatcherGuru"
+      name: "Watcher.Guru"
+      category: media_news
+      credibility: 65
+    - handle: "@YourMediaAccount"
+      name: "Media perso"
+      category: media_news
+      credibility: 55
+  personal_watchlist:
+    - handle: "@CustomAccount1"
+      name: "Compte perso 1"
+      category: personal_watchlist
+      credibility: 45
+    - handle: "@CustomAccount2"
+      name: "Compte perso 2"
+      category: personal_watchlist
+      credibility: 45
