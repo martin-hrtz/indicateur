@@ -1,0 +1,3 @@
+.runtime/
+backend/.venv/
+frontend/config.json

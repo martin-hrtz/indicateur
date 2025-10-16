@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import os
 from pathlib import Path
 from typing import Dict, List
 
@@ -22,6 +23,7 @@ class TwitterStreamWatcher:
         self.inference = inference
         self.sources_path = sources_path
         self.sources = self._load_sources()
+        self.bearer = os.getenv("TWITTER_BEARER")
         self._backoff = 60
 
     def _load_sources(self) -> Dict[str, List[Dict[str, str]]]:
@@ -30,6 +32,9 @@ class TwitterStreamWatcher:
         return data.get("suggested_accounts", {})
 
     async def run(self) -> None:
+        if not self.bearer:
+            LOGGER.warning("Twitter bearer token absent, watcher désactivé")
+            return
         while True:
             try:
                 await self._stream()
