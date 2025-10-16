@@ -58,13 +58,29 @@ class ReasonerClient:
                 async with session.post(url, headers=headers, json=body) as resp:
                     resp.raise_for_status()
                     data = await resp.json()
-                    tool_output = data["choices"][0]["message"].get("tool_calls", []) if data.get("choices") else []
+                    choices = data.get("choices") or []
+                    if not choices:
+                        LOGGER.warning("OpenAI response missing choices: %s", data)
+                        return None
+
+                    message = choices[0].get("message") or {}
+                    tool_output = message.get("tool_calls") or []
                     if tool_output:
                         arguments = tool_output[0].get("function", {}).get("arguments")
-                        return json.loads(arguments)
-                    content = data["choices"][0]["message"].get("content")
+                        if arguments:
+                            try:
+                                return json.loads(arguments)
+                            except json.JSONDecodeError:
+                                LOGGER.exception("Invalid JSON in tool call: %s", arguments)
+                                return None
+                    content = message.get("content")
                     if content:
-                        return json.loads(content)
+                        try:
+                            return json.loads(content)
+                        except json.JSONDecodeError:
+                            LOGGER.exception("Invalid JSON content: %s", content)
+                            return None
+                    LOGGER.warning("OpenAI response missing tool output and content: %s", data)
                     return None
             LOGGER.warning("Provider %s not implemented", self.provider)
         except Exception as exc:  # pragma: no cover - network failures are logged

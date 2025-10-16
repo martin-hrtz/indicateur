@@ -21,14 +21,17 @@ class ExchangeStatusWatcher:
         self._backoff = 60
 
     async def run(self) -> None:
-        while True:
-            try:
-                await self._poll()
-                self._backoff = 60
-            except Exception as exc:  # pragma: no cover - external IO
-                LOGGER.exception("Exchange status poll failed: %s", exc)
-                self._backoff = min(self._backoff * 2, 600)
-            await asyncio.sleep(self._backoff)
+        try:
+            while True:
+                try:
+                    await self._poll()
+                    self._backoff = 60
+                except Exception as exc:  # pragma: no cover - external IO
+                    LOGGER.exception("Exchange status poll failed: %s", exc)
+                    self._backoff = min(self._backoff * 2, 600)
+                await asyncio.sleep(self._backoff)
+        finally:
+            await self.close()
 
     async def _poll(self) -> None:
         if not self._session or self._session.closed:
