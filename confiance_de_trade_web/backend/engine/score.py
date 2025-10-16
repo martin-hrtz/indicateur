@@ -95,7 +95,7 @@ class ScoreEngine:
         for event in events:
             await self.add_event(event)
 
-    async def tick(self) -> None:
+    async def tick(self) -> ScoreState:
         """Recompute the score using current events."""
 
         now = time.time()
@@ -122,6 +122,12 @@ class ScoreEngine:
             self._ema_score = ema
             self._active_cache = sorted(contributions, key=lambda c: c.contribution, reverse=True)
             self._last_update = now
+            state = ScoreState(
+                score=round(self._current_score, 2),
+                updated_at=self._last_update,
+                active=[c.as_dict() for c in self._active_cache],
+            )
+        return state
 
     def _cleanup_locked(self, now: float) -> None:
         to_remove: List[str] = []

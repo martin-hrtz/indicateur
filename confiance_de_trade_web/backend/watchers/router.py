@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import logging
 import time
-from typing import Any, Dict
+from typing import Any, Awaitable, Callable, Dict
 
 from ..engine.risk import RiskEvent
 from ..engine.score import ScoreEngine
@@ -14,8 +14,13 @@ LOGGER = logging.getLogger(__name__)
 class EventRouter:
     """Thin wrapper that hands watchers' events to the score engine."""
 
-    def __init__(self, engine: ScoreEngine) -> None:
+    def __init__(
+        self,
+        engine: ScoreEngine,
+        on_update: Callable[[], Awaitable[None]],
+    ) -> None:
         self.engine = engine
+        self._on_update = on_update
 
     async def emit(
         self,
@@ -39,6 +44,7 @@ class EventRouter:
         accepted = await self.engine.add_event(event)
         if accepted:
             LOGGER.info("Event accepted %s | %s", source, title)
+            await self._on_update()
         else:
             LOGGER.debug("Event deduplicated %s | %s", source, title)
         return accepted
